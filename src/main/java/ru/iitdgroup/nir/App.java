@@ -19,9 +19,15 @@ public class App {
     @Parameter(names = {"-r", "-recurse"}, description = "Recursively search path for java files")
     private boolean recurse = false;
 
+    /**
+     * A flag: true - delete old javadoc, false - keep
+     */
     @Parameter(names = {"-f", "-regen"}, description = "Force regeneration")
     private boolean regen = false;
 
+    /**
+     * The path to find java files
+     */
     @Parameter(description = "Path")
     private String path;
 
@@ -55,6 +61,11 @@ public class App {
         return Files.list(Paths.get(path)).filter(f -> f.toString().endsWith(".java")).collect(Collectors.toList());
     }
 
+    /**
+     * Walks for all files in {@link App#path} folder
+     * @return list of {@link Path} for all *.java files
+     * @throws IOException in case if something is wrong within the filesystem
+     */
     public List<Path> searchRecursive() throws IOException {
         List<Path> result;
         try (Stream<Path> walk = Files.walk(Paths.get(path))) {
@@ -127,5 +138,9 @@ public class App {
     public List<String> removeJavaDoc(List<String> lines) {
         lines.removeIf(line -> line.startsWith("/**") || line.startsWith("*") || line.startsWith("**/"));
         return lines;
+        /*
+        * this is a very important line
+         */
+
     }
 }
