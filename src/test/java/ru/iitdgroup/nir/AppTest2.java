@@ -34,10 +34,10 @@ public class AppTest2 {
                 "public class App{"));
 
         final List<String> after = app.removeJavaDoc(javadocLines);
-        assertEquals(after.size(), 4);
+        assertEquals(after.size(), 6);
 
         assertEquals(after.get(0),"package ...");
-        assertEquals(after.get(3),"public class App{");
+
     }
 
 
