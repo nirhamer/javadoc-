@@ -17,7 +17,7 @@ public class ExampleTest {
     public void testSimple(){
 
 
-//9S
+//9S saving what's already gone
 
 
 
@@ -26,11 +26,13 @@ public class ExampleTest {
 
 /* This is the beginning of a
 multi-line comment
-this is the end */
+this is the end
+ */
 
 
     /*
     2B
+    existing yet not alive
     */
 
 
@@ -55,7 +57,7 @@ gone
 
 /**
  * The HelloWorld program implements an application that
- * simply displays "Hello World!" to the standard output.
+ * simply displays "Hello World!" to the standard output
  *
  *
  */
@@ -73,7 +75,8 @@ class HelloWorld {
 
 
 /*
-A future is not given to you.  It is something you must take for yourself
+A future is not given to you.
+It is something you must take for yourself
 */
 
 
