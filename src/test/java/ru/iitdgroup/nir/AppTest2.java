@@ -24,14 +24,14 @@ public class AppTest2 {
         App app = new App();
 
         List<String> javadocLines = new ArrayList<>(Arrays.asList(
-                "package ...",
-                "import ...",
-                "",
-                "/**ABC",
-                "*   ddd",
-                " */",
-                "",
-                "public class App{"));
+                "package ...\n",
+                "import ...\n",
+                "\n",
+                "/**ABC\n",
+                "*   ddd\n",
+                " */\n",
+                "\n",
+                "public class App{\n"));
 
         final List<String> after = app.removeJavaDoc(javadocLines);
         assertEquals(after.size(), 6);
@@ -42,7 +42,7 @@ public class AppTest2 {
 
 
     @Test
-    public void testKeepComments() {
+    public void testKeepRegularComments() {
         App app = new App();
 
         /*
@@ -50,15 +50,18 @@ public class AppTest2 {
          */
 
         List<String> commentLines = new ArrayList<>(Arrays.asList(
-                "package test",
-                "  /*ABC",
-                "  *   ddd",
-                " */",
-                " ",
-                " public class App{"
+                "package test\n",
+                "  /*ABC\n",
+                "  *   ddd\n",
+                " */\n",
+                " \n",
+                " public class App{\n"
         ));
 
         final List<String> after = app.removeJavaDoc(commentLines);
+
+        System.out.println(after);
+
         assertEquals(after.size(), 6);
         assertEquals(after.get(0),"package test");
         assertEquals(after.get(1),"  /*ABC");
