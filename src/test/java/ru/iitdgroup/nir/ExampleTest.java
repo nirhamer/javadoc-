@@ -24,7 +24,8 @@ public class ExampleTest {
 //origin
 
 
-/* This is the beginning of a
+/*
+This is the beginning of a
 multi-line comment
 this is the end
  */
@@ -38,7 +39,7 @@ this is the end
 
 /*
 road
-long
+long //a comment inside
 gone
  */
 
@@ -62,12 +63,31 @@ gone
  *
  */
 @Test
-class HelloWorld {
+class HelloWorld /*my brilliant class*/ {
+    /**
+     * main entry point
+     * @param args list of OS's arguments
+     */
     //my nested comment
     public static void main(String[] args) {
         // second  Prints nested comment Hello World
         System.out.println("Hello World!");
     }
+
+
+//    /**
+//     * get
+//     * @return int  k
+//     */
+//    public int getK() {
+//        return k;
+//    }
+//
+//    public void setK(int k) {
+//        this.k = k;
+//    }
+//
+//    int k;
 }
 
 
