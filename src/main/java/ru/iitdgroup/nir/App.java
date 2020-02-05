@@ -17,9 +17,11 @@ import java.util.stream.Stream;
 
 public class App {
 
+    @SuppressWarnings("CanBeFinal") //set by JCommander
     @Parameter(names = {"-r", "-recurse"}, description = "Recursively search path for java files")
     private boolean recurse = false;
 
+    @SuppressWarnings("CanBeFinal") //set by JCommander
     @Parameter(names = {"-f", "-regen"}, description = "Force regeneration")
     private boolean regen = false;
 
@@ -240,6 +242,6 @@ public class App {
         TEXT,
         JAVADOC,
         SINGLE_COMMENT,
-        MULTI_COMMNT
+        MULTI_COMMENT
     }
 }
