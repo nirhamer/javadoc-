@@ -146,6 +146,31 @@
                         </execution>
                     </executions>
                 </plugin>
+
+
+
+                <!--org.pitest:pitest-maven:mutationCoverage-->
+                <plugin>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>1.4.11</version>
+                    <configuration>
+                        <testPlugin>
+                            testng
+                        </testPlugin>
+
+                        <targetClasses>
+                            <param>
+                                ru.iitdgroup.nir.*
+                            </param>
+                        </targetClasses>
+                        <targetTests>
+                            <param>
+                                ru.iitdgroup.nir.*
+                            </param>
+                        </targetTests>
+                    </configuration>
+                </plugin>
             </plugins>
 
 

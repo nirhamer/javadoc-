@@ -48,7 +48,7 @@ public class App {
 
         List<Path> files = recurse ? searchRecursive() : searchNonRecursive();
         for (Path path : files) {
-            generateJavaDoc(path);
+            readAndWriteFile(path);
         }
     }
 
@@ -64,10 +64,16 @@ public class App {
         return result;
     }
 
-    public void generateJavaDoc(Path path) throws IOException {
+    public void readAndWriteFile(Path path) throws IOException {
         List<String> lines = Files.readAllLines(path);
+        lines = processLines(lines);
+        if (lines == null) return;
+        Files.write(path, lines);
+    }
+
+    protected List<String> processLines(List<String> lines) {
         if (containsJavaDoc(lines) && !regen) {
-            return;
+            return null;
         }
 
         if (regen) {
@@ -119,8 +125,7 @@ public class App {
                         , info.getDisplayName(), info.getDescription()));
             }
         }
-
-        Files.write(path, lines);
+        return lines;
     }
 
 
