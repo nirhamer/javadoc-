@@ -75,13 +75,26 @@ public class RemoverTests {
                 "*I suppose were about to find out now \n" +
                 "*/\n" +
                 "    public void testSimple(){\n";
+        final String expected = "package ru.iitdgroup.nir;\n" +
+                "import org.testng.annotations.Test;\n" +
+                "public class ExampleTest {\n" +
+                "/*\n" +
+                "can u tall the difference between\n" +
+                " multi comment and Javadoc\n" +
+                "*/\n" +
+                "\n" +
+                "    public void testSimple(){\n";
 
 
-        List<String> lines = Arrays.asList(example.split("\n"));
+        List<String> lines = new ArrayList<>(Arrays.asList(example.split("\n")));
         final List<String> after = sharedApp.removeJavaDoc(lines);
-        assertEquals(after.size(), lines.size());
+        assertEquals(String.join("\n",after)+"\n", expected);
     }
 
+    @Test
+    public void testString_Join(){
+        assertEquals(String.join("\n","aaa","bbb"),"aaa\nbbb");
+    }
 
     @Test
     public void testExcel_4() {
@@ -103,11 +116,25 @@ public class RemoverTests {
                 "\n" +
                 "\n" +
                 "    public void testSimple(){";
+        final String expected = "package ru.iitdgroup.nir;\n" +
+                "import org.testng.annotations.Test;\n" +
+                "public class ExampleTest {\n" +
+                "       \n" +"{ \n" +
+                "    // our program begins with a call to main()\n" +
+                "    // Prints \"Hello, World\n" +
+                "    public static void main(String args[]) \n" +
+                "    { \n" +
+                "        System.out.println(\"Hello, World\"); \n" +
+                "    } \n" +
+                "} \n" +
+                "\n" +
+                "\n" +
+                "    public void testSimple(){";
 
 
-        List<String> lines = Arrays.asList(example.split("\n"));
+        List<String> lines = new ArrayList<>(Arrays.asList(example.split("\n")));
         final List<String> after = sharedApp.removeJavaDoc(lines);
-        assertEquals(after.size(), lines.size());
+        assertEquals(String.join("\n",after), expected);
     }
 
 
@@ -130,11 +157,18 @@ public class RemoverTests {
                 "\n" +
                 "    @Test\n" +
                 "    public void testSimple(){";
+        final String expected = "package ru.iitdgroup.nir;\n" +
+                "\n" +
+                "import org.testng.annotations.Test;\n" +
+                "\n" + "public class ExampleTest {\n" +
+                "\n" +
+                "    @Test\n" +
+                "    public void testSimple(){";
 
 
-        List<String> lines = Arrays.asList(example.split("\n"));
+        List<String> lines = new ArrayList<>(Arrays.asList(example.split("\n")));
         final List<String> after = sharedApp.removeJavaDoc(lines);
-        assertEquals(after.size(), lines.size());
+        assertEquals(String.join("\n",after), expected);
     }
 
 

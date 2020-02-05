@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -201,7 +202,39 @@ public class App {
     }
 
     public List<String> removeJavaDoc(List<String> lines) {
-        lines.removeIf(line -> line.trim().startsWith("/**") || line.trim().startsWith("*") || line.trim().startsWith("**/"));
+        States currentState = States.TEXT;
+        //lines.removeIf(line -> line.trim().startsWith("/**") || line.trim().startsWith("*") || line.trim().startsWith("**/"));
+        for (Iterator<String> iterator = lines.iterator(); iterator.hasNext(); ) {
+            String line = iterator.next();
+            switch (currentState) {
+                case TEXT:
+                    if (line.contains("/**")) {
+                        currentState = States.JAVADOC;
+                        iterator.remove();  //remove this line
+                    }
+                    break;
+                case JAVADOC:
+                    iterator.remove();   //this line
+                    if (line.contains("*/")) {
+                        currentState = States.TEXT;
+                    }
+                    break;
+                default:
+                    System.out.println("What is the state??? I don't know how to handle it!!!");
+            }
+
+
+            System.out.printf("Checking: -->> %s, state is %s%n",
+                    line,
+                    currentState);
+        }
         return lines;
+    }
+
+    private enum States{
+        TEXT,
+        JAVADOC,
+        SINGLE_COMMENT,
+        MULTI_COMMNT
     }
 }
