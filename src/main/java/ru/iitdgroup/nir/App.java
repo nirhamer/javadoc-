@@ -208,6 +208,14 @@ public class App {
         return null;
     }
 
+    /**
+     * This function is intended to remove all java docs
+     * <p>
+     *     It will
+     * </p>
+     * @param lines
+     * @return
+     */
     public List<String> removeJavaDoc(List<String> lines) {
         States currentState = States.TEXT;
         //lines.removeIf(line -> line.trim().startsWith("/**") || line.trim().startsWith("*") || line.trim().startsWith("**/"));
@@ -238,8 +246,17 @@ public class App {
         return lines;
     }
 
+    /**
+     * Possible states of our "runner" - the program part, which iterates source line by line
+     */
     private enum States{
+        /**
+         * The "runner" runs through plain java text
+         */
         TEXT,
+        /**
+         * The "runner" runs throgh javadoc comment for function / field /class
+         */
         JAVADOC,
         SINGLE_COMMENT,
         MULTI_COMMENT

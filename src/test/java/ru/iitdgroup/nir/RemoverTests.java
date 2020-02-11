@@ -42,6 +42,7 @@ public class RemoverTests {
     }
 
 
+
     @Test
     public void testExcel_2() {
         final String example = "package ru.iitdgroup.nir;\n" +
