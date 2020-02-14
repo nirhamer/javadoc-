@@ -72,24 +72,22 @@ public class JavaDocPlaceHolder {
     public void test_2() {
 
         App app = new App();
-        final String input = "public class 1020 {\n" +
-                "    @DisplayName\n" +
-                "    public static void end {\n" +
-                "        System.out.println(\"2020\");\n" +
-                "//hi test" +
-                "@DisplayName" +
-                "/*how is your mood" +
-                "{*/    " +
-                "    }";
+        final String input = "public class gen1020 {\n" +
+                        "    @DisplayName\n" +
+                        "    public static void end() {\n" +
+                        "        System.out.println(\"2020\");\n" +
+                        "    }\n" +
+                        "    }\n";
         List<String> inputLines = toList(input);
 
         final String expected = "JAVADOC\n" +
-                "public class 1020 {\n" +
+                "public class gen1020 {\n" +
                 "JAVADOC\n" +
                 "    @DisplayName\n" +
                 "    public static void end() {\n" +
                 "        System.out.println(\"2020\");\n" +
-                "    }";
+                "    }\n" +
+                "    }\n";
         List<String> expectedLines = Arrays.asList(expected.split("\n"));
 
         List<String> actualLines = app.addJavaDocPlaceHolders(inputLines);
@@ -102,12 +100,14 @@ public class JavaDocPlaceHolder {
     public void test_3() {
         App app = new App();
         final String input = "public class revolution {\n" +
-                "    @DisplayName\n" +
+                "@DisplayName\n" +
                 "    public static void end {\n" +
-                "        System.out.println(\"anno2050\");\n" +
+                "        System.out.println(\"anno2050\");" +
                 "//hi test   " +
                 "/*how is your mood" +
                 "{*/    " +
+                "    }" +
+                "    }" +
                 "    }";
         List<String> inputLines = toList(input);
 
@@ -115,12 +115,13 @@ public class JavaDocPlaceHolder {
                 "public class revolution {\n" +
                 "JAVADOC\n" +
                 "@DisplayName\n" +
-                "/**" +
-                "{this is a javaDoc comment" +
-                "*/" +
-                "" +
-                "  public static void end() {\n" +
-                "        System.out.println(\"anno2050\");\n" +
+                "    public static void end {\n" +
+                "        System.out.println(\"anno2050\");" +
+                "//hi test   " +
+                "/*how is your mood" +
+                "{*/    " +
+                "    }" +
+                "    }" +
                 "    }";
 
         // ** the idea **
