@@ -177,7 +177,7 @@ public class App {
                 sb.append(System.lineSeparator());
             }
         }
-        sb.append(offset).append("**/");
+        sb.append(offset).append("*/");
         return sb.toString();
     }
 
@@ -255,7 +255,7 @@ public class App {
          */
         TEXT,
         /**
-         * The "runner" runs throgh javadoc comment for function / field /class
+         * The "runner" runs through javadoc comment for function / field /class
          */
         JAVADOC,
         SINGLE_COMMENT,
