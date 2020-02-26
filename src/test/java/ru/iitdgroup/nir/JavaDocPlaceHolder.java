@@ -22,7 +22,7 @@ public class JavaDocPlaceHolder {
                 "        System.out.println(\"lads\");\n" +
                 "    }";
         List<String> inputLines =
-                new ArrayList<>(Arrays.asList(input.split("\n"))); //we need to create an modifable list from asList;
+                new ArrayList<>(Arrays.asList(input.split("\n"))); //we need to create an modifiable list from asList;
 
 
     /*
@@ -58,7 +58,7 @@ public class JavaDocPlaceHolder {
     }
 
     /**
-     * Return modifable list from a big string. The string is chopped by new line separators
+     * Return modifiable list from a big string. The string is chopped by new line separators
      *
      * @param source string to chop
      * @return List of strings
