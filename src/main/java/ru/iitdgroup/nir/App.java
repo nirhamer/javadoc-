@@ -131,6 +131,9 @@ public class App {
     }
 
 
+
+
+
     public int determinePadding(List<String> lines, int index) {
         int padding = 0;
         for (int i = index; i < lines.size(); i++) {
@@ -147,6 +150,14 @@ public class App {
         return padding;
     }
 
+    /**
+     * this function  the method searches the list of lines for lines that contain { or @DisplayName and if finds any
+     * it adds a single line containing JAVADOC right before it
+     * for the {, this check is only done once
+     * so it searches for the very first { and for every @DisplayNam
+     * @param lines
+     * @return
+     */
 
     public List<String> addJavaDocPlaceHolders(List<String> lines) {
         boolean foundClass = false;
@@ -162,6 +173,17 @@ public class App {
         }
         return lines;
     }
+
+
+    /**
+     *the function adds at the beginning /** and in the end /* and * in front of each line
+     * additionally to that, it can offset the whole construct
+     * for example with an offset of 4 u get four spaces in front of everything
+     * @param padding
+     * @param lines
+     * @return
+     */
+
 
     public String wrapInJavaDoc(int padding, String... lines) {
         StringBuilder offset = new StringBuilder();
@@ -181,6 +203,9 @@ public class App {
         return sb.toString();
     }
 
+
+
+
     public boolean containsJavaDoc(List<String> lines) {
         for (String line : lines) {
             if (line.startsWith("/**")) {
@@ -190,6 +215,9 @@ public class App {
         return false;
     }
 
+
+
+
     public static String extractFromAnnotationWithParameter(String line, String variableName) {
         final Pattern p = Pattern.compile(variableName + "[ \\t]*=[ \\t]*\"(.*?)\"");
         final Matcher m = p.matcher(line);
@@ -198,6 +226,13 @@ public class App {
         }
         return null;
     }
+
+    /**
+     * this function extract information from a String using Regex=(Regular expressions)
+     * @param line
+     * @return
+     */
+
 
     public static String extractFromQuotes(String line) {
         final Pattern p = Pattern.compile("\"(.*?)\"");
