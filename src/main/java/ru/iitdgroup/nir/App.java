@@ -73,6 +73,7 @@ public class App {
         Files.write(path, lines);
     }
 
+    //TODO: Create javadoc for whole method
     protected List<String> processLines(List<String> lines) {
         if (containsJavaDoc(lines) && !regen) {
             return null;
@@ -84,39 +85,9 @@ public class App {
 
         lines = addJavaDocPlaceHolders(lines);
         List<AnnotationInformation> information = new ArrayList<>();
-        boolean foundClassDisplayName = false;
-        boolean foundClassDescription = false;
+        FoundValues foundValues = new FoundValues();
         for (String line : lines) {
-            if (!foundClassDisplayName && line.contains("@DisplayName")) {
-                foundClassDisplayName = true;
-                String displayName = extractFromAnnotationWithParameter(line, "name");
-                if (information.isEmpty()) {
-                    AnnotationInformation info = new AnnotationInformation(true);
-                    info.setDisplayName(displayName);
-                    information.add(info);
-                } else {
-                    information.get(0).setDescription(displayName);
-
-                }
-                continue;
-            }
-
-            if (!foundClassDescription && line.contains("@Description")) {
-                foundClassDescription = true;
-                String description = extractFromQuotes(line);
-                if (information.isEmpty()) {
-                    AnnotationInformation info = new AnnotationInformation(true);
-                    info.setDescription(description);
-                    information.add(info);
-                } else {
-                    information.get(0).setDescription(description);
-                }
-                continue;
-            }
-
-            if (foundClassDisplayName && line.contains("@DisplayName")) {
-                information.add(new AnnotationInformation(extractFromAnnotationWithParameter(line, "")));
-            }
+            processSingleLine(information, line, foundValues);
         }
         int index = 0;
         for (int i = 0; i < lines.size(); i++) {
@@ -130,8 +101,53 @@ public class App {
         return lines;
     }
 
+    private static class FoundValues{
+        public boolean foundClassDisplayName;
+        public boolean foundClassDescription;
+    }
 
+    private void processSingleLine(List<AnnotationInformation> information, String line, FoundValues foundValues) {
+        if (processDisplayName(information, line, foundValues)) return;
 
+        if (processDescription(information, line, foundValues)) return;
+
+        if (foundValues.foundClassDisplayName && line.contains("@DisplayName")) {
+            information.add(new AnnotationInformation(extractFromAnnotationWithParameter(line, "")));
+        }
+    }
+
+    private boolean processDisplayName(List<AnnotationInformation> information, String line, FoundValues foundValues) {
+        if (!foundValues.foundClassDisplayName && line.contains("@DisplayName")) {
+            foundValues.foundClassDisplayName = true;
+            String displayName = extractFromAnnotationWithParameter(line, "name");
+            if (information.isEmpty()) {
+                AnnotationInformation info = new AnnotationInformation(true);
+                info.setDisplayName(displayName);
+                information.add(info);
+            } else {
+                information.get(0).setDescription(displayName);
+
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private boolean processDescription(List<AnnotationInformation> information, String line, FoundValues foundValues) {
+        if (!foundValues.foundClassDescription && line.contains("@Description")) {
+            foundValues.foundClassDescription = true;
+            String description = extractFromQuotes(line);
+            if (information.isEmpty()) {
+                AnnotationInformation info = new AnnotationInformation(true);
+                info.setDescription(description);
+                information.add(info);
+            } else {
+                information.get(0).setDescription(description);
+            }
+            return true;
+        }
+        return false;
+    }
 
 
     public int determinePadding(List<String> lines, int index) {
