@@ -171,8 +171,9 @@ public class App {
      * it adds a single line containing JAVADOC right before it
      * for the {, this check is only done once
      * so it searches for the very first { and for every @DisplayNam
-     * @param lines
-     * @return
+     * @param lines hi jack how are u doing today is a fine day for @DisplayName
+     * @return JAVADOC
+     * hi jack how are u doing today is a fine day for @DisplayName
      */
 
     public List<String> addJavaDocPlaceHolders(List<String> lines) {
@@ -196,9 +197,14 @@ public class App {
      * additionally to that, it can offset the whole construct
      * for example with an offset of 4 u get four spaces in front of everything
      * @param padding
-     * @param lines
+     * @param lines dream hope ambition
      * @return
+    /**
+     * dream
+     * hope
+     * ambition
      */
+
 
 
     public String wrapInJavaDoc(int padding, String... lines) {
@@ -220,8 +226,12 @@ public class App {
     }
 
 
-
-
+    /**this function accepts a list of Strings it will look through every String inside the collection
+     * until it finds a string that starts with /**
+     * if it can't find anything /** in the collection, it'll return false
+     * @param lines /** hi that's too funny
+     * @return true
+     */
     public boolean containsJavaDoc(List<String> lines) {
         for (String line : lines) {
             if (line.startsWith("/**")) {
@@ -245,8 +255,8 @@ public class App {
 
     /**
      * this function extract information from a String using Regex=(Regular expressions)
-     * @param line
-     * @return
+     * @param line "hi my name is jack how are u doing this fine day"
+     * @return hi my name is jack how are u doing this fine day
      */
 
 
