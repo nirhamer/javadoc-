@@ -1,20 +1,18 @@
 package ru.iitdgroup.nir;
 
 
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import static org.testng.Assert.assertEquals;
 import ru.iitdgroup.nir.App;
 
 
-public class WrapInJavaDocTest {
+public class ExtractFromQuotesTest {
 
-    public WrapInJavaDocTest() {
+    public ExtractFromQuotesTest() {
     }
 
     @BeforeClass
@@ -34,29 +32,10 @@ public class WrapInJavaDocTest {
     }
 
     @Test
-    public void test_9() {
-        final String expected = " /**\n"
-                + "* dream hope ambition\n"
-                + "*/";
-        assertEquals(new App().wrapInJavaDoc(1, "dream hope ambition"), expected);
+    public void test_6() {
+        String expectedStringFromMethod = App.extractFromQuotes("String variableName = \"jack\";");
+        assertEquals(expectedStringFromMethod, "jack");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

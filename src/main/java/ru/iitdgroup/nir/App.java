@@ -19,14 +19,14 @@ public class App {
 
     @SuppressWarnings("CanBeFinal") //set by JCommander
     @Parameter(names = {"-r", "-recurse"}, description = "Recursively search path for java files")
-    private boolean recurse = false;
+    private boolean recurse = true;
 
     @SuppressWarnings("CanBeFinal") //set by JCommander
     @Parameter(names = {"-f", "-regen"}, description = "Force regeneration")
-    private boolean regen = false;
+    private boolean regen = true;
 
     @Parameter(description = "Path")
-    private String path;
+    public String path;
 
     public static void main(String[] args) {
         App app = new App();
@@ -72,6 +72,9 @@ public class App {
         if (lines == null) return;
         Files.write(path, lines);
     }
+    public List<String> processLines_public(List<String> lines){
+        return this.processLines(lines);
+    }
 
     //TODO: Create javadoc for whole method
     protected List<String> processLines(List<String> lines) {
@@ -101,9 +104,14 @@ public class App {
         return lines;
     }
 
-    private static class FoundValues{
+    public static class FoundValues{
         public boolean foundClassDisplayName;
         public boolean foundClassDescription;
+    }
+
+
+    public void processSingleLine_public(List<AnnotationInformation> information, String line, FoundValues foundValues) {
+        this.processSingleLine(information,line,foundValues);
     }
 
     private void processSingleLine(List<AnnotationInformation> information, String line, FoundValues foundValues) {
@@ -114,6 +122,11 @@ public class App {
         if (foundValues.foundClassDisplayName && line.contains("@DisplayName")) {
             information.add(new AnnotationInformation(extractFromAnnotationWithParameter(line, "")));
         }
+    }
+
+
+    public boolean processDisplayName_public(List<AnnotationInformation> information, String line, FoundValues foundValues) {
+        return this.processDisplayName(information,line,foundValues);
     }
 
     private boolean processDisplayName(List<AnnotationInformation> information, String line, FoundValues foundValues) {
@@ -131,6 +144,11 @@ public class App {
             return true;
         }
         return false;
+    }
+
+
+    public boolean processDescription_public(List<AnnotationInformation> information, String line, FoundValues foundValues) {
+        return this.processDescription(information,line,foundValues);
     }
 
     private boolean processDescription(List<AnnotationInformation> information, String line, FoundValues foundValues) {
@@ -181,7 +199,12 @@ public class App {
         for (int i = 0; i < lines.size(); i++) {
             if (lines.get(i).contains("{") && !foundClass) {
                 foundClass = true;
-                lines.add(i++, "JAVADOC");
+                try{
+                    lines.add(i++, "JAVADOC");
+                }
+                catch(Exception e){
+                    return lines;
+                }
             }
 
             if (foundClass && lines.get(i).contains("@DisplayName")) {
@@ -243,7 +266,7 @@ public class App {
 
 
 
-
+    //DONE
     public static String extractFromAnnotationWithParameter(String line, String variableName) {
         final Pattern p = Pattern.compile(variableName + "[ \\t]*=[ \\t]*\"(.*?)\"");
         final Matcher m = p.matcher(line);
@@ -259,7 +282,7 @@ public class App {
      * @return hi my name is jack how are u doing this fine day
      */
 
-
+    //DONE
     public static String extractFromQuotes(String line) {
         final Pattern p = Pattern.compile("\"(.*?)\"");
         final Matcher m = p.matcher(line);
@@ -284,7 +307,7 @@ public class App {
             String line = iterator.next();
             switch (currentState) {
                 case TEXT:
-                    if (line.contains("/**")) {
+                    if (line.contains("/**") || line.contains("JAVADOC")) {
                         currentState = States.JAVADOC;
                         iterator.remove();  //remove this line
                     }
@@ -298,8 +321,6 @@ public class App {
                 default:
                     System.out.println("What is the state??? I don't know how to handle it!!!");
             }
-
-
             System.out.printf("Checking: -->> %s, state is %s%n",
                     line,
                     currentState);
